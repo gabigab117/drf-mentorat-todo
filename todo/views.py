@@ -8,6 +8,7 @@ class TodoItemViewSet(ModelViewSet):
     queryset = TodoItem.objects.all()
     serializer_class = TodoItemSerializer
     permission_classes = [IsAdminUser]
+    # http_method_names = ["get"]
 
     def get_serializer_class(self):
         if self.action == "create":
