@@ -19,13 +19,3 @@ class TodoItemComment(models.Model):
 
     def __str__(self):
         return self.comment
-
-
-class TodoPhoto(models.Model):
-    todo_item = models.ForeignKey(TodoItem, on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to='todo_photos/')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.photo.url
-
