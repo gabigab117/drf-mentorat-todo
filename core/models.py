@@ -1,8 +1,8 @@
 from django.db import models
 
 
-class SingltonModel(models.Model):
-    
+class SingletonModel(models.Model):
+
     class Meta:
         abstract = True
     
@@ -19,13 +19,13 @@ class SingltonModel(models.Model):
         return obj
 
 
-class SiteSettings(SingltonModel):
-    max_todo_items = models.PositiveIntegerField(verbose_name="nombre maximum de todo items")
-    
+class SiteSettings(SingletonModel):
+    max_todo_items = models.PositiveIntegerField()
+
     def __str__(self):
-        return "Paramètres du site"
-    
+        return "Paramètre du site"
+
     class Meta:
-        verbose_name = "Paramètres du site"
-        verbose_name_plural = "Paramètres du site"
+        verbose_name = "Paramètre du site"
+        verbose_name_plural = "Paramètre du site"
         
