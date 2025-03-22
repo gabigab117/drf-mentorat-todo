@@ -18,4 +18,4 @@ class TodoItemComment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.comment
+        return f"{self.todo_item} - {self.created_at}"

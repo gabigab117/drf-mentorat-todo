@@ -10,7 +10,8 @@ class TodoItemCommentSerializer(serializers.ModelSerializer):
 
 
 class TodoItemSerializer(serializers.ModelSerializer):
-    comments = TodoItemCommentSerializer(many=True)
+    # comments = TodoItemCommentSerializer(many=True)
+    comments = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = TodoItem
@@ -35,3 +36,8 @@ class TodoItemCreateSerializer(serializers.ModelSerializer):
         if "patrick" in value.lower():
             raise serializers.ValidationError("On ne touche pas à Patrick")
         return value
+    
+    def validate(self, data):
+        if data["title"] == data["description"]:
+            raise serializers.ValidationError("title et description sont identiques voyons !")
+        return data
