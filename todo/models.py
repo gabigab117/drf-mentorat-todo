@@ -13,7 +13,7 @@ class TodoItem(models.Model):
 
 
 class TodoItemComment(models.Model):
-    todo_item = models.ForeignKey(TodoItem, on_delete=models.CASCADE)
+    todo_item = models.ForeignKey(TodoItem, on_delete=models.CASCADE, related_name="comments")
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
