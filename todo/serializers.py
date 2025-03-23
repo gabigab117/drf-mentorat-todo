@@ -10,12 +10,12 @@ class TodoItemCommentSerializer(serializers.ModelSerializer):
 
 
 class TodoItemSerializer(serializers.ModelSerializer):
-    # comments = TodoItemCommentSerializer(many=True)
-    comments = serializers.StringRelatedField(many=True)
+    comments = TodoItemCommentSerializer(many=True)
+    # comments = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = TodoItem
-        fields = ["title", "description", "completed", "created_at", "comments"]
+        fields = ["id", "title", "description", "completed", "created_at", "comments"]
         # depth = 1
     
     def to_representation(self, instance):
@@ -41,3 +41,16 @@ class TodoItemCreateSerializer(serializers.ModelSerializer):
         if data["title"] == data["description"]:
             raise serializers.ValidationError("title et description sont identiques voyons !")
         return data
+    
+    def to_internal_value(self, data):
+        # https://docs.djangoproject.com/fr/5.1/ref/request-response/#querydict-objects
+        data = data.copy()
+        data["title"] = data["title"].upper()
+        return super().to_internal_value(data)
+    
+    def create(self, validated_data): # appelée à la création d'un objet
+        todo_item = TodoItem.objects.create(**validated_data)
+
+        # Opérations supplémentaires
+        TodoItemComment.objects.create(todo_item=todo_item, comment="Le super commentaire par défaut")
+        return todo_item
